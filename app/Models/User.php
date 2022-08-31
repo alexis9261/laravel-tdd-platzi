@@ -58,4 +58,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    /**
+     * Return a Collection of Repository Class
+     *
+     * @return Collection
+     **/
+    public function repositories()
+    {
+        return $this->hasMany(Repository::class);
+    }
 }
