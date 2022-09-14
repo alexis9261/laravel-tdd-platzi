@@ -15,7 +15,6 @@
                             <th>Enlace</th>
                             <th>Descripcion</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,20 +23,25 @@
                                 <td class="text-center">{{ $repository->id }}</td>
                                 <td class="text-center">{{ $repository->url }}</td>
                                 <td class="text-center">{{ $repository->description }}</td>
-                                <td class="px-8 py-2 text-center">
-                                    <a class="rounded-md shadow-md bg-green-500 text-white px-12 py-1" href="{{ route('repositories.show', $repository) }}">
-                                        Ver
-                                    </a>
-                                </td>
-                                <td class="px-4 py-2 text-center">
-                                    <a class="rounded-md shadow-md bg-indigo-700 text-white px-12 py-1" href="{{ route('repositories.edit', $repository) }}">
-                                        Editar
-                                    </a>
+                                <td class="py-2">
+                                    <div class="flex justify-around">
+                                        <a class="rounded-md shadow-md bg-green-500 text-white text-center px-4 py-1 flex-1" href="{{ route('repositories.show', $repository) }}">
+                                            Ver
+                                        </a>
+                                        <a class="rounded-md shadow-md bg-indigo-700 text-white text-center px-4 py-1 flex-1" href="{{ route('repositories.edit', $repository) }}">
+                                            Editar
+                                        </a>
+                                        <form class="flex-1" action="{{ route('repositories.destroy', $repository) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input class="rounded-md shadow-md bg-red-500 text-white cursor-pointer px-4 py-1" type="submit" value="Eliminar">
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td class="text-center text-red-900 py-3" colspan="5">No hay repositorios creados para este usuario</td>
+                                <td class="text-center text-red-900 py-3" colspan="4">No hay repositorios creados para este usuario</td>
                             </tr>
                         @endforelse
                     </tbody>
