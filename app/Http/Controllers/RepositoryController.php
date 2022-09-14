@@ -28,7 +28,7 @@ class RepositoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('repositories.create');
     }
 
     /**
@@ -70,9 +70,13 @@ class RepositoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Repository $repository)
     {
+        if (Auth::user()->id != $repository->user_id) {
+            abort(403);
+        }
 
+        return view('repositories.edit', compact('repository'));
     }
 
     /**

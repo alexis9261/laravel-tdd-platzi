@@ -15,6 +15,10 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        <style>
+            table tr td { width:25%; }
+       </style>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

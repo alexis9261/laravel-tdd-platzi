@@ -53,7 +53,7 @@ class RepositoryControllerTest extends TestCase
      **/
     public function test_index_with_data()
     {
-        $user = User::factory()->create(); // id = 2
+        $user = User::factory()->create(); // id = 1
         $repository = Repository::factory()->create(['user_id' => $user->id]); // user_id = 1
 
         $this
@@ -177,6 +177,62 @@ class RepositoryControllerTest extends TestCase
             ->get("repositories/$repository->id") // hace una peticion HTTP Put a la url 'repositories' y envia la $data, repositories.update
             ->assertStatus(403);
     }
+
+    /**
+     * Verifica que la ruta repositories.update[PUT] funcione bien
+     * Correspondiente al controladorApp\Controllers\RepositoryController->update()
+     */
+    public function test_edit()
+    {
+
+        // creo un usuario con el cual estare logeado, que sera el dueño del registro
+        $user = User::factory()->create();
+
+        // Creo un repositorio que sera actualizado
+        $repository = Repository::factory()->create(['user_id' => $user->id]);
+
+        $this
+            ->actingAs($user) // simula estar logeado como este usuario
+            ->get("repositories/$repository->id/edit") // hace una peticion HTTP Put a la url 'repositories' y envia la $data, repositories.update
+            ->assertSee($repository->url) // verifico redireccion a url de edicion de repository, repositories.edit
+            ->assertSee($repository->description); // verifico redireccion a url de edicion de repository, repositories.edit
+    }
+
+    /**
+     * Verifica que la ruta repositories.update[PUT] funcione bien
+     * Correspondiente al controladorApp\Controllers\RepositoryController->update()
+     */
+    public function test_edit_policy()
+    {
+
+        // creo un usuario con el cual estare logeado, que sera el dueño del registro
+        $user = User::factory()->create(); // id = 1
+
+        // Creo un repositorio que sera actualizado
+        $repository = Repository::factory()->create(); // user_id = 2
+
+        $this
+            ->actingAs($user) // simula estar logeado como este usuario
+            ->get("repositories/$repository->id/edit") // hace una peticion HTTP Put a la url 'repositories' y envia la $data, repositories.update
+            ->assertStatus(403);
+    }
+
+            /**
+     * Verifica que la ruta repositories.update[PUT] funcione bien
+     * Correspondiente al controladorApp\Controllers\RepositoryController->update()
+     */
+    public function test_create()
+    {
+
+        // creo un usuario con el cual estare logeado, que sera el dueño del registro
+        $user = User::factory()->create();
+
+        $this
+            ->actingAs($user) // simula estar logeado como este usuario
+            ->get("repositories/create") // hace una peticion HTTP Put a la url 'repositories' y envia la $data, repositories.update
+            ->assertStatus(200); // verifico redireccion a url de edicion de repository, repositories.edit
+    }
+
 
     /**
      * Verifica que la validacion de los datos en la ruta repositories.store[POST] funcione bien

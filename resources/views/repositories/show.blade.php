@@ -7,9 +7,25 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <h1>{{ $repository->url }}</h1>
-                <div>{{ $repository->description }}</div>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
+                <div class="">
+                    <strong>Id: </strong> {{ $repository->url }}
+                </div>
+                <div>
+                    <strong>Descripcion: </strong>
+                    {{ $repository->description }}
+                </div>
+                <div>
+                    <strong>Url: </strong>
+                    {{ $repository->url }}
+                </div>
+                <div>
+                    <strong>Author: </strong>
+                    {{ $repository->user->name }}
+                </div>
+                <div class="mt-4">
+                    <a class="bg-green-600 text-white font-bold py-1 px-6 rounded-md shadow-md" href="{{ route('repositories.index') }}">Volver</a>
+                </div>
             </div>
         </div>
     </div>
